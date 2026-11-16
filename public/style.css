@@ -1,0 +1,97 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5fa;
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    background: linear-gradient(to right, #44318d, #7955c9);
+}
+
+.navbar-brand {
+    font-size: 23px;
+    font-weight: bold;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(120deg, #5143a5, #9474db);
+    color: white;
+    padding: 60px 0;
+}
+
+.header h1 {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.header p {
+    margin-top: 15px;
+    font-size: 17px;
+}
+
+.main-img {
+    width: 180px;
+    background: white;
+    padding: 12px;
+    border-radius: 20px;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px #ddd;
+}
+
+.card h2 {
+    font-size: 35px;
+}
+
+/* Account Section */
+.account {
+    background: linear-gradient(120deg, #eeeaff, #f7efff);
+}
+
+.login-card {
+    max-width: 420px;
+    background: white;
+}
+
+.form-control {
+    padding: 11px;
+}
+
+.btn-primary {
+    background: #6048b5;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: #44318d;
+}
+
+/* Footer */
+.footer {
+    background: #292348;
+    color: white;
+}
+
+/* Mobile */
+@media(max-width: 600px) {
+    .header {
+        text-align: center;
+        padding: 40px 15px;
+    }
+
+    .header h1 {
+        font-size: 29px;
+    }
+
+    .main-img {
+        width: 130px;
+        margin-top: 25px;
+    }
+}
