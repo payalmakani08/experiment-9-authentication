@@ -1,97 +1,67 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: #f5f5fa;
-    color: #333;
-}
-
-/* Navbar */
-.navbar {
-    background: linear-gradient(to right, #44318d, #7955c9);
-}
-
-.navbar-brand {
-    font-size: 23px;
-    font-weight: bold;
+    background-color: #f4f4f4;
+    margin: 0;
 }
 
 /* Header */
-.header {
-    background: linear-gradient(120deg, #5143a5, #9474db);
+.main-header {
+    background: linear-gradient(to right, #667eea, #764ba2);
     color: white;
-    padding: 60px 0;
+    padding: 65px 15px;
 }
 
-.header h1 {
-    font-size: 36px;
-    font-weight: bold;
+.main-header h1 {
+    font-size: 35px;
+    margin-bottom: 12px;
 }
 
-.header p {
-    margin-top: 15px;
+.main-header p {
     font-size: 17px;
 }
 
-.main-img {
-    width: 180px;
-    background: white;
-    padding: 12px;
-    border-radius: 20px;
+/* About image */
+img {
+    max-height: 300px;
+    width: 100%;
+    object-fit: cover;
 }
 
-/* Cards */
-.card {
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 3px 10px #ddd;
+/* Feature cards */
+.feature-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: 0.2s;
 }
 
-.card h2 {
-    font-size: 35px;
+.feature-card:hover {
+    background-color: #f0edff;
 }
 
-/* Account Section */
-.account {
-    background: linear-gradient(120deg, #eeeaff, #f7efff);
+/* Account section */
+.account-box {
+    background-color: white;
+    max-width: 450px;
+    padding: 25px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
 }
 
-.login-card {
-    max-width: 420px;
-    background: white;
-}
-
-.form-control {
-    padding: 11px;
-}
-
-.btn-primary {
-    background: #6048b5;
-    border: none;
-}
-
-.btn-primary:hover {
-    background: #44318d;
+/* Buttons */
+.btn {
+    border-radius: 5px;
 }
 
 /* Footer */
-.footer {
-    background: #292348;
+footer {
+    background-color: #212529;
     color: white;
+    padding: 18px;
+    margin-top: 40px;
 }
 
-/* Mobile */
-@media(max-width: 600px) {
-    .header {
-        text-align: center;
-        padding: 40px 15px;
-    }
-
-    .header h1 {
-        font-size: 29px;
-    }
-
-    .main-img {
-        width: 130px;
-        margin-top: 25px;
-    }
+footer p {
+    margin: 5px;
+    font-size: 14px;
 }
