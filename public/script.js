@@ -1,104 +1,150 @@
+
 const loginForm = document.getElementById("loginForm");
 const registerForm = document.getElementById("registerForm");
-
+const dashboard = document.getElementById("dashboard");
 const message = document.getElementById("message");
 
-// Show Login
-function showLogin() {
+// Show login form
+document.getElementById("loginTab").addEventListener("click", function () {
     loginForm.classList.remove("d-none");
     registerForm.classList.add("d-none");
-    message.innerText = "";
-}
+    dashboard.classList.add("d-none");
+    message.textContent = "";
+});
 
-// Show Register
-function showRegister() {
+// Show registration form
+document.getElementById("registerTab").addEventListener("click", function () {
     registerForm.classList.remove("d-none");
     loginForm.classList.add("d-none");
-    message.innerText = "";
-}
+    dashboard.classList.add("d-none");
+    message.textContent = "";
+});
 
-// Register User
-registerForm.addEventListener("submit", async function(e) {
+// Register new user
+registerForm.addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    const data = {
-        name: document.getElementById("name").value,
-        email: document.getElementById("email").value,
-        password: document.getElementById("password").value
-    };
+    const name = document.getElementById("registerName").value;
+    const email = document.getElementById("registerEmail").value;
+    const password = document.getElementById("registerPassword").value;
 
-    const res = await fetch("/register", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(data)
-    });
+    try {
+        const response = await fetch("/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include",
+            body: JSON.stringify({ name, email, password })
+        });
 
-    const result = await res.json();
+        const data = await response.json();
 
-    message.innerText = result.message;
+        if (response.ok) {
+            message.textContent = "Registration successful! Please login.";
+            message.style.color = "green";
 
-    if (res.ok) {
-        registerForm.reset();
-        showLogin();
-        message.innerText = result.message;
+            registerForm.reset();
+            registerForm.classList.add("d-none");
+            loginForm.classList.remove("d-none");
+        } else {
+            message.textContent = data.message || "Registration failed.";
+            message.style.color = "red";
+        }
+
+    } catch (error) {
+        message.textContent = "Something went wrong. Try again.";
+        message.style.color = "red";
     }
 });
 
-// Login User
-loginForm.addEventListener("submit", async function(e) {
+// Login user
+loginForm.addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    const data = {
-        email: document.getElementById("loginEmail").value,
-        password: document.getElementById("loginPassword").value
-    };
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
 
-    const res = await fetch("/login", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(data)
-    });
+    try {
+        const response = await fetch("/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include",
+            body: JSON.stringify({ email, password })
+        });
 
-    const result = await res.json();
+        const data = await response.json();
 
-    message.innerText = result.message;
+        if (response.ok) {
+            message.textContent = "Login successful!";
+            message.style.color = "green";
+            loginForm.reset();
+            await loadDashboard();
+        } else {
+            message.textContent = data.message || "Invalid email or password.";
+            message.style.color = "red";
+        }
 
-    if (res.ok) {
-        loginForm.reset();
-        loadDashboard();
+    } catch (error) {
+        message.textContent = "Something went wrong. Try again.";
+        message.style.color = "red";
     }
 });
 
-// Load Dashboard
+// Load dashboard
 async function loadDashboard() {
-    const res = await fetch("/dashboard");
+    try {
+        const response = await fetch("/dashboard", {
+            credentials: "include"
+        });
 
-    if (res.ok) {
-        const user = await res.json();
+        const data = await response.json();
 
-        document.getElementById("forms").classList.add("d-none");
-        document.getElementById("dashboard").classList.remove("d-none");
+        if (response.ok) {
+            loginForm.classList.add("d-none");
+            registerForm.classList.add("d-none");
+            dashboard.classList.remove("d-none");
 
-        document.getElementById("userName").innerText = user.name;
-        document.getElementById("userEmail").innerText = user.email;
+            document.getElementById("userName").textContent =
+                "Name: " + data.user.name;
 
-        message.innerText = "";
+            document.getElementById("userEmail").textContent =
+                "Email: " + data.user.email;
+        } else {
+            message.textContent = data.message || "Please login again.";
+            message.style.color = "red";
+        }
+
+    } catch (error) {
+        message.textContent = "Unable to load dashboard.";
+        message.style.color = "red";
     }
 }
 
-// Logout
-async function logout() {
-    await fetch("/logout", {
-        method: "POST"
-    });
+// Logout user
+document.getElementById("logoutButton").addEventListener("click", async function () {
+    try {
+        const response = await fetch("/logout", {
+            method: "POST",
+            credentials: "include"
+        });
 
-    document.getElementById("dashboard").classList.add("d-none");
-    document.getElementById("forms").classList.remove("d-none");
+        if (response.ok) {
+            dashboard.classList.add("d-none");
+            loginForm.classList.remove("d-none");
+            registerForm.classList.add("d-none");
 
-    showLogin();
-    message.innerText = "Logged out successfully!";
-}
+            message.textContent = "You have logged out successfully.";
+            message.style.color = "green";
+        } else {
+            message.textContent = "Logout failed. Please try again.";
+            message.style.color = "red";
+        }
 
-// Check login when page opens
-loadDashboard();
-
+    } catch (error) {
+        message.textContent = "Something went wrong.";
+        message.style.color = "red";
+    }
+});
